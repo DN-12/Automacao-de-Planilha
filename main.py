@@ -1,22 +1,21 @@
 import pandas as pd
-import openpyxl
 #Processo de dados
 df = pd.read_excel("dados/vendas.xlsx")
-df["Valor por Unidade"] = df["Valor"]/ df["Quantidade"].round(2)
-df["Total"] = df["Total"] + df["Frete"]
-total_vendas = df["Quantidade"].sum()
-total_produtos = df["Valor"].sum()
-total_frete = df["Frete"].sum()
-total_geral = df["Total"].sum()
-ticket_medio = total_geral / total_vendas
+df["Total"] = (df["Valor"] + df["Frete"]).round(2)
+df["Valor por Unidade"] = (df["Total"]/ df["Quantidade"]).round(2)
+total_vendas = df["Quantidade"].sum().round(2)
+total_produtos = df["Valor"].sum().round(2)
+total_frete = df["Frete"].sum().round(2)
+total_geral = df["Total"].sum().round(2)
+ticket_medio = (total_geral / total_vendas).round(2)
 #Criando nova aba para resumo de dados
 resumo = pd.DataFrame({
     "Indicador": [
-    "Total de vendas",
-        "Valor dos produtos",
-        "Total de frete",
-        "Total geral",
-        "Ticket médio"
+    "Total de Vendas",
+        "Valor dos Produtos",
+        "Total de Frete",
+        "Total Geral",
+        "Valor Médio por Unidade (c/ Frete)"
     ],
     "Valor": [
         total_vendas,
